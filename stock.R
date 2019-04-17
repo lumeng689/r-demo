@@ -65,4 +65,38 @@ summary(year3)
 showStat("Year 3", year3)
 doLm("Year 3", year3)
 
+# roe > 0 year 1
+roeYear1.gt0 <- subset(our.data, ROE > 0 & YEAR == 1)
+# roe > 0 year 2
+roeYear2.gt0 <- subset(our.data, ROE > 0 & YEAR == 2)
+# roe > 0 year 3
+roeYear3.gt0 <- subset(our.data, ROE > 0 & YEAR == 3)
 
+write.csv(roeYear1.gt0, "C:/Users/86150/Documents/roe-year1-gt0.csv")
+write.csv(roeYear2.gt0, "C:/Users/86150/Documents/roe-year2-gt0.csv")
+write.csv(roeYear3.gt0, "C:/Users/86150/Documents/roe-year3-gt0.csv")
+
+save(year3, "C:/Users/86150/Documents/year3.csv")
+
+# change year2 column name
+year2x <- year2
+names(year2x) <- paste0(names(year2x), "2")
+head(year2x)
+year2x$ROEy <- year2x$ROE2
+
+year12 <- merge(year1, year2x, by="ROEy")
+
+year12Roe.gt0 <-  subset(year12, ROE > 0 | ROE2 > 0)
+
+head(year12Roe.gt0)
+# write.csv(year12, "C:/Users/86150/Documents/year12.csv")
+write.csv(year12Roe.gt0, "C:/Users/86150/Documents/year12-roe-gt0.csv")
+
+year12Roe.22 <-  subset(year12, ROE < 0 & ROE2 > 0)
+head(year12Roe.22)
+write.csv(year12Roe.22, "C:/Users/86150/Documents/year12-roe-22.csv")
+
+# change year3 column name
+year3x <- year3
+names(year3x) <- paste0(names(year3x), "3")
+head(year3x)
