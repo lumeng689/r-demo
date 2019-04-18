@@ -19,8 +19,12 @@ showStat <- function (yearStr, yearData) {
   for (i in 1: cols) {
     x <- yearData[,i]
     title <- paste(yearStr, names(yearData[i]))
+    # jpeg(file=paste0("boxplot_", title, ".jpeg"))
     boxplot(x, main=title)
-    hist(x, main=title)
+    # dev.off()
+    jpeg(file=paste0("hist_", title, ".jpeg"))
+    # hist(x, main=title)
+    # dev.off()
   }
   
   
@@ -84,7 +88,20 @@ names(year2x) <- paste0(names(year2x), "2")
 head(year2x)
 year2x$ROEy <- year2x$ROE2
 
+# change year3 column name
+year3x <- year3
+names(year3x) <- paste0(names(year3x), "3")
+head(year3x)
+year3x$ROEy2 <- year3x$ROE3
+
+
+#year12 <- merge(year1, year2x, by.x="ROEy", by.y="ROE2")
 year12 <- merge(year1, year2x, by="ROEy")
+
+#year123 <- merge(year12, year3x, by.x="ROEy2", by.y="ROE3")
+year123 <- merge(year12, year3x, by="ROEy2")
+
+write.csv(year123, "C:/Users/86150/Documents/year123.csv")
 
 year12Roe.gt0 <-  subset(year12, ROE > 0 | ROE2 > 0)
 
